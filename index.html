@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR" tema="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SimSO</title>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+
+<body>
+  <header>
+    <h2>SimSO</h2>
+    <div>
+      <nav style="display:inline-block">
+      </nav>
+      <button class="trocaTema" onclick="trocaTema()">🌙/☀️</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Simulador de Sistema Operacional</h1>
+    <button class="btn btn-primary" onclick="irParaProcessos()">Começar</button>
+  </section>
+
+  <section class="processo">
+    <h2>Tabela de Processos</h2>
+    <div class="boxtabela">
+      <table class="tabela">
+        <thead>
+            <tr>
+                <th>Processos</th>
+                <th>CPU</th>
+                <th>Disco</th>
+                <th>CPU</th>
+                <th>Disco</th>
+            </tr>
+        </thead>
+        <tbody class="corpo-tabela">
+        </tbody>
+    </table>
+    </div>
+    <div id="controle">
+        <button class="btn" onclick="adicionar()">Adiconar</button>
+        <button class="btn" onclick="remover()">Remover</button>
+        <button class="btn" >Adiconar</button>
+        <button class="btn" >Adiconar</button>
+    </div>
+    <h2>Fila de Execução</h2>
+    <div id="fila"></div>
+  </section>
+
+  <section class="mais">
+    <div style="display: flex; flex-direction: row; align-items: center;">
+      <h2>Relogio:</h2><h3 id="relogio">tempo</h2>
+    </div>
+    <h2>Tempo de CPU</h2>
+    <h2>Tempo de Disco</h2>
+  </section>
+
+  <footer>
+    © <span id="ano"></span> SimSO. Todos os direitos reservados.
+  </footer>
+  <script src="/v2.0/script.js"></script>
+</body>
+</html>
