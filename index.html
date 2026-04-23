@@ -23,44 +23,66 @@
     <button class="btn btn-primary" onclick="irParaProcessos()">Começar</button>
   </section>
 
-  <section class="processo">
-    <h2>Tabela de Processos</h2>
-    <div class="boxtabela">
-      <table class="tabela">
-        <thead>
+  <section class="container-lateral">
+    
+    <section class="processo">
+
+      <h2>Tabela de Processos</h2>
+
+      <div class="boxtabela">
+
+        <table class="tabela">
+          <thead>
             <tr>
-                <th>Processos</th>
-                <th>CPU</th>
-                <th>Disco</th>
-                <th>CPU</th>
-                <th>Disco</th>
+              <th>Processos</th>
+              <th>CPU</th>
+              <th>Disco</th>
+              <th>CPU</th>
+              <th>Disco</th>
             </tr>
-        </thead>
-        <tbody class="corpo-tabela">
-        </tbody>
-    </table>
-    </div>
-    <div id="controle">
+          </thead>
+
+          <tbody class="corpo-tabela">
+          </tbody> 
+        </table>
+
+      </div>
+
+      <div id="controle">
         <button class="btn" onclick="adicionar()">Adiconar</button>
         <button class="btn" onclick="remover()">Remover</button>
-        <button class="btn" >Adiconar</button>
-        <button class="btn" >Adiconar</button>
-    </div>
-    <h2>Fila de Execução</h2>
-    <div id="fila"></div>
-  </section>
+        <button class="btn" onclick="iniciarTimer()">Iniciar</button>
+        <button class="btn" onclick="pararTimer()">Parar</button>
+        <button class="btn" onclick="resetarTimer()">Resetar</button>
+      </div>
 
-  <section class="mais">
-    <div style="display: flex; flex-direction: row; align-items: center;">
-      <h2>Relogio:</h2><h3 id="relogio">tempo</h2>
-    </div>
-    <h2>Tempo de CPU</h2>
-    <h2>Tempo de Disco</h2>
+      <section>
+        <h2>Fila de Execução</h2>
+        <div id="fila"></div>  
+      </section>
+      
+    </section>
+
+    <section class="mais">
+
+      <div style="display: flex; flex-direction: row; align-items: center;">
+        <h2>Relogio:</h2>
+        <h3 id="relogio">tempo</h3>
+      </div>
+
+      <h2>Tempo de CPU</h2>
+      <h2>Tempo de Disco</h2>
+    
+    </section>
+
   </section>
+  
 
   <footer>
     © <span id="ano"></span> SimSO. Todos os direitos reservados.
   </footer>
-  <script src="/v2.0/script.js"></script>
+
+  <script src="script.js"></script>
+  
 </body>
 </html>

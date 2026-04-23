@@ -11,24 +11,40 @@ function trocaTema() {
     html.setAttribute('tema', escolha === 'dark' ? 'light' : 'dark');
 }
 
-function atualizarRelogio() {
-  const agora = new Date();
+let tempoDecorrido = 0;
 
-  let horas = agora.getHours();
-  let minutos = agora.getMinutes();
-  let segundos = agora.getSeconds();
+let intervalo = null;
 
-  minutos = minutos.toString().padStart(2, '0');
-  segundos = segundos.toString().padStart(2, '0');
+function formatarTempo(segundosTotais) {
+  const horas = Math.floor(segundosTotais / 3600);
+  const minutos = Math.floor((segundosTotais % 3600) / 60);
+  const segundos = segundosTotais % 60;
 
-  const horario = `${horas}:${minutos}:${segundos}`;
-  document.getElementById("relogio").innerText = horario;
+  return `${horas.toString().padStart(2,'0')}:`+`${minutos.toString().padStart(2,'0')}:`+`${segundos.toString().padStart(2,'0')}`;
 }
-// atualiza a cada 1 segundo
-setInterval(atualizarRelogio, 1000);
-// roda uma vez logo ao carregar
-atualizarRelogio();
 
+function atualizarTimer() {
+  tempoDecorrido++;
+  document.getElementById("relogio").innerText =
+    formatarTempo(tempoDecorrido);
+}
+
+function iniciarTimer() {
+  if (intervalo !== null) return; 
+  intervalo = setInterval(atualizarTimer, 1000);
+}
+
+function pararTimer() {
+  clearInterval(intervalo);
+  intervalo = null;
+}
+
+function resetarTimer() {
+  pararTimer();
+  tempoDecorrido = 0;
+  document.getElementById("relogio").innerText = "00:00:00";
+}
+ 
 let contadorProcessos = 0;
 
 function gerarIntervalo(min, max) {
@@ -112,7 +128,7 @@ function executarBarra(elemento, tempoCPU) {
     if (progresso >= tempoCPU) {
       clearInterval(intervalo);
     }
-  }, 500);
+  }, 1000);
 }
 
 function criarBarraProcesso(id, cor, tempoCPU) {
