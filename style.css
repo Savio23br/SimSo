@@ -101,7 +101,7 @@
       font-size: 18px;
     }
 
-    .hero, .Processo {
+    .hero, .processo {
       transition: all 0.6s ease;
       transform-origin: top;
     }
@@ -116,6 +116,10 @@
       border: 0;
       margin: 0;
     }
+
+    /*.container-lateral{
+      display: inline-block;
+    }*/
 
     .processo {
       opacity: 0;
@@ -137,7 +141,7 @@
       transform: scaleY(1);
       pointer-events: auto;
       height: auto;
-      max-width: 1100px;
+      max-width: 2000px;
       margin: 80px auto;
       padding: 20px;
       flex-direction: column;
@@ -234,25 +238,65 @@
 
     /*novidades*/
 
-    #fila {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 20px;
+    #fila{
+      display:flex;
+      gap:8px;
+      margin-top:10px;
     }
 
-    .processo-bar {
+
+    #filaPronto, #filaDisco {
+      display: flex;              /* HORIZONTAL */
+      flex-direction: row;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    .barra-container {
       width: 100%;
-      height: 30px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      height: 35px;
+      background: white;
+      border-radius: 20px;
       overflow: hidden;
-      position: relative;
+      margin-bottom: 10px;
+      border: 2px solid #ccc;
     }
 
-    .processo-fill {
+    .barra{
+      width: 100%;
+      height: 32px;
+      background: white;
+      border-radius: 6px;
+      overflow: hidden;
+
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+    }
+
+    .barra-progresso {
       height: 100%;
-      width: 0%;
-      transition: width 0.3s linear;
+      flex-shrink: 0;     /* NUNCA ENCOLHE */
+    }
+
+    .bloco-fila{
+      width: 60px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+    
+    #cpuAtual, #discoAtual {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background: white;
+      border-radius: 12px;
+      padding: 6px;
+      overflow-x: auto;
     }

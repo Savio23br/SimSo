@@ -57,8 +57,11 @@
       </div>
 
       <section>
-        <h2>Fila de Execução</h2>
-        <div id="fila"></div>  
+        <h2>Fila de Pronto</h2>
+        <div id="filaPronto"></div>
+
+        <h2>Fila do Disco</h2>
+        <div id="filaDisco"></div>
       </section>
       
     </section>
@@ -70,11 +73,20 @@
         <h3 id="relogio">tempo</h3>
       </div>
 
-      <h2>Tempo de CPU</h2>
-      <h2>Tempo de Disco</h2>
-    
+      <h2>CPU Executando</h2>
+      <div id="cpuAtual" class="executando">
+        <div id="cpuBarra" class="barra">
+        </div>
+      </div>
+      
+      <h2>Disco Executando</h2>
+      <div id="discoAtual" class="executando">
+        <div id="discoBarra" class="barra">
+        </div>
+      </div>
     </section>
-
+    
+    
   </section>
   
 
