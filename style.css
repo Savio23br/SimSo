@@ -39,7 +39,7 @@
     }
     
     header {
-      max-width: 1200px;
+      max-width: 100%;
       margin: auto;
       padding: 24px 20px;
       display: flex;
@@ -130,22 +130,24 @@
       transition: all 0.6s ease;
       transform-origin: top;
       max-width: 1100px;
-      margin: 80px auto;
       padding: 20px;
       flex-direction: column;
       text-align: center;
     }
 
     .processo.ativo {
+      display: flex;
       opacity: 1;
       transform: scaleY(1);
       pointer-events: auto;
       height: auto;
       max-width: 2000px;
-      margin: 80px auto;
-      padding: 20px;
-      flex-direction: column;
+      margin: 2% auto;
+      padding: 0px;
+      flex-direction: row;
       text-align: center;
+      align-items: center;
+      justify-content: space-around;
     }
 
     .tabela {
@@ -160,16 +162,18 @@
 
     .boxtabela{
       padding: 23px;
-      margin: 33px;
+      margin-bottom: 20px;
       border: 6px solid var(--border);
       border-radius: 16px;
       background: var(--card);
+      width: 87%;
     }
 
     #controle{
         display: flex;
         flex-direction:row;
         justify-content: space-around;
+        width: 100%;
     }
 
     .processo button:hover { 
@@ -207,8 +211,7 @@
       background: var(--orange-600);
       color: var(--text);
       text-align: center;
-      padding: 80px 20px;
-      margin-top: 80px;
+      padding: 20px;
     }
 
     .mais.ativo{
@@ -216,6 +219,10 @@
       transform: scaleY(1);
       pointer-events: auto;
       height: auto;
+      margin: 0;
+      padding-bottom: 12;
+      margin-top: 1%;
+      padding-bottom: 80px;
     }
 
     footer {
@@ -249,7 +256,10 @@
       display: flex;              /* HORIZONTAL */
       flex-direction: row;
       align-items: center;
-      margin: 10px 0;
+      height: 40px;
+      background-color: white;
+      padding: 5px;
+      border-radius: 12px;
     }
 
     .barra-container {
@@ -299,4 +309,23 @@
       border-radius: 12px;
       padding: 6px;
       overflow-x: auto;
+    }
+
+    #interface1, #interface2{
+      width: 100%;
+      
+    }
+    #interface1{
+      margin-right: 6px;
+      margin-left: 6px;
+    }
+    #interface2{
+      margin-right: 6px;
+      margin-left: 6px;
+    }
+    h2,h3{
+      margin: 0;
+    }
+    html {
+      scroll-behavior: smooth;
     }

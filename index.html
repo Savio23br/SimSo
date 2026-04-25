@@ -25,45 +25,42 @@
 
   <section class="container-lateral">
     
-    <section class="processo">
+    <section id="processo" class="processo">
+      <section id="interface1">
+        <h2>Tabela de Processos</h2>
 
-      <h2>Tabela de Processos</h2>
+        <div class="boxtabela">
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>CPU</th>
+                <th>Disco</th>
+                <th>CPU</th>
+                <th>Disco</th>
+              </tr>
+            </thead>
 
-      <div class="boxtabela">
+            <tbody class="corpo-tabela">
+            </tbody> 
+          </table>
+        </div>
 
-        <table class="tabela">
-          <thead>
-            <tr>
-              <th>Processos</th>
-              <th>CPU</th>
-              <th>Disco</th>
-              <th>CPU</th>
-              <th>Disco</th>
-            </tr>
-          </thead>
+        <div id="controle">
+          <button class="btn" onclick="adicionar()">Adiconar</button>
+          <button class="btn" onclick="remover()">Remover</button>
+          <button class="btn" onclick="iniciarTimer()">Iniciar</button>
+          <button class="btn" onclick="pararTimer()">Parar</button>
+          <button class="btn" onclick="resetarTimer()">Resetar</button>
+        </div>
+      </section>
 
-          <tbody class="corpo-tabela">
-          </tbody> 
-        </table>
-
-      </div>
-
-      <div id="controle">
-        <button class="btn" onclick="adicionar()">Adiconar</button>
-        <button class="btn" onclick="remover()">Remover</button>
-        <button class="btn" onclick="iniciarTimer()">Iniciar</button>
-        <button class="btn" onclick="pararTimer()">Parar</button>
-        <button class="btn" onclick="resetarTimer()">Resetar</button>
-      </div>
-
-      <section>
+      <section id="interface2">
         <h2>Fila de Pronto</h2>
         <div id="filaPronto"></div>
-
         <h2>Fila do Disco</h2>
         <div id="filaDisco"></div>
       </section>
-      
     </section>
 
     <section class="mais">

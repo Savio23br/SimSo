@@ -37,9 +37,12 @@ class Processo {
 }
 
 function executarCPU(processo) {
+  registrarCPU(processo);
+
   if (processo.etapa === "CPU1") {
     processo.cpu1Restante--;
 
+    //se o processo acabou
     if (processo.cpu1Restante === 0) {
       processo.etapa = "DISCO1";
       processo.status = "WAITING";
@@ -47,7 +50,8 @@ function executarCPU(processo) {
 
   } else if (processo.etapa === "CPU2") {
     processo.cpu2Restante--;
-
+    desenharBarraCPU();
+    //se o processo acabou
     if (processo.cpu2Restante === 0) {
       processo.etapa = "DISCO2";
       processo.status = "WAITING";
@@ -56,6 +60,8 @@ function executarCPU(processo) {
 }
 
 function executarDisco(processo) {
+  registrarDisco(processo);
+
   if (processo.etapa === "DISCO1") {
     processo.disco1Restante--;
 
@@ -184,6 +190,9 @@ function adicionar() {
   
   p.linha =linha;
 
+  tempoTotalCPU += Number(cpu1.innerText)+Number(cpu2.innerText);
+  tempoTotalDisco+= Number(disco1.innerText)+Number(disco2.innerText);
+
   filaPronto.push(p);
   }
   desenharFila();
@@ -192,6 +201,19 @@ function adicionar() {
 function pegarProximoDaFila() {
   if (filaPronto.length === 0) return null;
   return filaPronto.shift();
+}
+
+function irParaProcessos() {
+  const hero = document.querySelector(".hero");
+  const processo = document.querySelector(".processo");
+  const mais = document.querySelector(".mais");
+  // some hero
+  hero.classList.add("sumir");
+  // aparece processo
+  processo.classList.add("ativo");
+  mais.classList.add("ativo");
+
+  document.getElementById("processos").scrollIntoView({ behavior: "smooth" });
 }
 
 function tickSO() {
@@ -206,7 +228,6 @@ function tickSO() {
   // Executa o disco
   if (processoDiscoAtual) {
     executarDisco(processoDiscoAtual);
-    registrarDisco(processoDiscoAtual);
 
     if (processoDiscoAtual.status === "READY") {
       filaPronto.push(processoDiscoAtual);
@@ -231,7 +252,6 @@ if (!processoAtual) {
 if (processoAtual) {
 
   executarCPU(processoAtual);
-  registrarCPU(processoAtual);
   contadorQuantum ++;
 
   // SE ACABOU CPU, NÃO REGISTRA TEMPO
@@ -264,27 +284,56 @@ atualizarInterface();
 }
 
 
- 
+ function removerProcessoDoSistema(id) {
+
+  // acha o processo em qualquer lugar
+  const todos = [
+    ...filaPronto,
+    ...filaDisco,
+    processoAtual,
+    processoDiscoAtual
+  ].filter(p => p && p.id === id);
+
+  if (todos.length > 0) {
+    const p = todos[0];
+
+    tempoTotalCPU   -= (p.cpu1Total + p.cpu2Total);
+    tempoTotalDisco -= (p.disco1Total + p.disco2Total);
+  }
+  
+  // remove das filas
+  filaPronto = filaPronto.filter(p => p.id !== id);
+  filaDisco  = filaDisco.filter(p => p.id !== id);
+
+  // se estiver na CPU, mata
+  if (processoAtual && processoAtual.id === id) {
+    processoAtual = null;
+  }
+
+  // se estiver no disco, mata
+  if (processoDiscoAtual && processoDiscoAtual.id === id) {
+    processoDiscoAtual = null;
+  }
+}
 
 function remover() {
   const tbody = document.querySelector(".corpo-tabela");
 
   if (tbody.rows.length > 0) {
+
+    const ultimaLinha = tbody.rows[tbody.rows.length - 1];
+    const id = Number(ultimaLinha.cells[0].innerText);
+
+    // remove da fila lógica
+    removerProcessoDoSistema(id);
+    //remove da tabela
     tbody.deleteRow(tbody.rows.length - 1);
     contadorProcessos--;
+
+    desenharFila(); 
+    desenharDisco();
   }
 
-}
-
-function irParaProcessos() {
-  const hero = document.querySelector(".hero");
-  const processo = document.querySelector(".processo");
-  const mais = document.querySelector(".mais");
-  // some hero
-  hero.classList.add("sumir");
-  // aparece processo
-  processo.classList.add("ativo");
-  mais.classList.add("ativo");
 }
 
 //novidades
@@ -350,7 +399,7 @@ function registrarCPU(processo){
         cor: corDoProcesso(processo)
     });
 
-    tempoTotalCPU++;
+    
     desenharBarraCPU();
 }
 
@@ -360,13 +409,25 @@ function registrarDisco(processo){
         cor: corDoProcesso(processo)
     });
 
-    tempoTotalDisco++;
+    
     desenharBarraDisco();
 }
 
 function desenharBarraCPU(){
     const barra = document.getElementById("cpuBarra");
-    barra.innerHTML = "";
+    barra.innerHTML = "";    
+    let tempoProcesso = 0;
+    if (!processoAtual) return;
+
+    if(processoAtual.etapa =="CPU1"){
+      tempoProcesso
+      =processoAtual.cpu1Total-processoAtual.cpu1Restante;
+    }else if(processoAtual.etapa =="CPU2"){
+      tempoProcesso
+      =processoAtual.cpu2Total-processoAtual.cpu2Restante;
+    }else{
+      return;
+    }
 
     const largura = 100 / tempoTotalCPU;
 
@@ -381,6 +442,17 @@ function desenharBarraCPU(){
 function desenharBarraDisco(){
     const barra = document.getElementById("discoBarra");
     barra.innerHTML = "";
+    let tempoDiscado=0;    
+
+    if (!processoDiscoAtual) return;
+
+    if(processoDiscoAtual.etapa =="DISCO1"){
+      tempoDiscado=processoDiscoAtual.disco1Total-processoDiscoAtual.disco1Restante;
+    }else if(processoDiscoAtual.etapa =="DISCO2"){
+      tempoDiscado=processoDiscoAtual.disco2Total-processoDiscoAtual.disco2Restante;
+    }else{
+      return;
+    }
 
     const largura = 100 / tempoTotalDisco;
 
