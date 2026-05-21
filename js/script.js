@@ -151,51 +151,106 @@ function gerarCor() {
 }
 
 function adicionar() {
-  //Limitador de 4 processos maximos
-  
-  
-  if(contadorProcessos<= 3){
-  contadorProcessos++;
+  if (contadorProcessos <= 3) {
+    contadorProcessos++;
 
-  const tbody = document.querySelector(".corpo-tabela");
+    const tbody = document.querySelector(".corpo-tabela");
+    const linha = tbody.insertRow();
 
-  const linha = tbody.insertRow();
+    const celulaId = linha.insertCell(0);
+    celulaId.innerText = contadorProcessos;
 
-  // ID
-  const celulaId = linha.insertCell(0);
-  celulaId.innerText = contadorProcessos;
+    const cor = gerarCor();
+    celulaId.style.backgroundColor = cor;
+    celulaId.style.color = "#fff";
 
-  const cor = gerarCor();
-  celulaId.style.backgroundColor = cor;
-  celulaId.style.color = "#fff";
+    function criarCelulaEditavel(valor, coluna) {
+      const celula = linha.insertCell(coluna);
+      celula.innerText = valor;
+      celula.contentEditable = true;
 
-  // CPU 1 (1 a 9)
-  const cpu1 = linha.insertCell(1);
-  cpu1.innerText = gerarIntervalo(1, 9);
+      // permite só número
+      celula.addEventListener("input", () => {
+        celula.innerText = celula.innerText.replace(/\D/g, "");
+      });
 
-  // Disco (8 a 15)
-  const disco1 = linha.insertCell(2);
-  disco1.innerText = gerarIntervalo(8, 15);
+      // quando terminar de editar
+      celula.addEventListener("blur", () => {
+        atualizarProcessoDaLinha(celula);
+      });
 
-  // CPU 2 (1 a 9)
-  const cpu2 = linha.insertCell(3);
-  cpu2.innerText = gerarIntervalo(1, 9);
+      return celula;
+    }
 
-  // Disco 2 (8 a 15)
-  const disco2 = linha.insertCell(4);
-  disco2.innerText = gerarIntervalo(8, 15);
-  
-  const p = new Processo(contadorProcessos,parseInt(cpu1.innerText),parseInt(disco1.innerText),parseInt(cpu2.innerText),parseInt(disco2.innerText)
-  );
-  
-  p.linha =linha;
+    const cpu1  = criarCelulaEditavel(gerarIntervalo(1, 9), 1);
+    const disco1 = criarCelulaEditavel(gerarIntervalo(8, 15), 2);
+    const cpu2  = criarCelulaEditavel(gerarIntervalo(1, 9), 3);
+    const disco2 = criarCelulaEditavel(gerarIntervalo(8, 15), 4);
 
-  tempoTotalCPU += Number(cpu1.innerText)+Number(cpu2.innerText);
-  tempoTotalDisco+= Number(disco1.innerText)+Number(disco2.innerText);
+    const p = new Processo(
+      contadorProcessos,
+      Number(cpu1.innerText),
+      Number(disco1.innerText),
+      Number(cpu2.innerText),
+      Number(disco2.innerText)
+    );
 
-  filaPronto.push(p);
+    p.linha = linha;
+
+    filaPronto.push(p);
+
+    recalcularTemposTotais();
+    desenharFila();
   }
-  desenharFila();
+}
+
+function atualizarProcessoDaLinha(celula) {
+  const linha = celula.parentElement;
+  const id = Number(linha.cells[0].innerText);
+
+  const processo = [
+    processoAtual,
+    processoDiscoAtual,
+    ...filaPronto,
+    ...filaDisco
+  ].find(p => p && p.id === id);
+
+  if (!processo) return;
+
+  const cpu1 = Number(linha.cells[1].innerText);
+  const disco1 = Number(linha.cells[2].innerText);
+  const cpu2 = Number(linha.cells[3].innerText);
+  const disco2 = Number(linha.cells[4].innerText);
+
+  processo.cpu1Total = cpu1;
+  processo.disco1Total = disco1;
+  processo.cpu2Total = cpu2;
+  processo.disco2Total = disco2;
+
+  processo.cpu1Restante = cpu1;
+  processo.disco1Restante = disco1;
+  processo.cpu2Restante = cpu2;
+  processo.disco2Restante = disco2;
+
+  // recalcula totais do sistema
+  recalcularTemposTotais();
+}
+
+function recalcularTemposTotais() {
+  tempoTotalCPU = 0;
+  tempoTotalDisco = 0;
+
+  const todos = [
+    processoAtual,
+    processoDiscoAtual,
+    ...filaPronto,
+    ...filaDisco
+  ].filter(p => p);
+
+  todos.forEach(p => {
+    tempoTotalCPU += p.cpu1Total + p.cpu2Total;
+    tempoTotalDisco += p.disco1Total + p.disco2Total;
+  });
 }
 
 function pegarProximoDaFila() {
