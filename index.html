@@ -48,9 +48,23 @@
 
         <div id="controle">
           <button class="btn" onclick="adicionar()">Adiconar</button>
+          <button class="btn" onclick="setEscalonador()">Escalonador</button>
+          <select name="Escalonador-barra" id="Escalonador">
+            <option value="0">
+              Rodizio(Round-Robin)
+            </option>
+            <option value="1">
+              FCFS (Primeiro a Chegar, Primeiro a Ser Executado)           
+            </option>
+            <option value="2">
+              Trabalho Mais Curto Primeiro
+            </option>
+            <option value="3">
+              Escalonamento por Prioridade
+            </option>
+          </select>
           <button class="btn" onclick="remover()">Remover</button>
-          <button class="btn" onclick="iniciarTimer()">Iniciar</button>
-          <button class="btn" onclick="pararTimer()">Parar</button>
+          <button class="btn" onclick="proximo()">Proximo</button>
           <button class="btn" onclick="resetarTimer()">Resetar</button>
         </div>
       </section>
@@ -64,12 +78,6 @@
     </section>
 
     <section class="mais">
-
-      <div style="display: flex; flex-direction: row; align-items: center;">
-        <h2>Relogio:</h2>
-        <h3 id="relogio">tempo</h3><p>   
-        </p>
-      </div>
 
       <h2>CPU Executando</h2>
       <div id="cpuAtual" class="executando">

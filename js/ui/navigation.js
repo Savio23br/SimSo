@@ -1,4 +1,9 @@
+import { resetarTimer } from "../utils/timer.js";
+
 export function irParaProcessos() {
+  
+  resetarTimer();
+
   const hero = document.querySelector(".hero");
   const processo = document.querySelector(".processo");
   const mais = document.querySelector(".mais");
@@ -8,6 +13,7 @@ export function irParaProcessos() {
   if (mais) mais.classList.add("ativo");
 
   const processos = document.getElementById("processos");
+  
   if (processos) {
     processos.scrollIntoView({ behavior: "smooth" });
   }

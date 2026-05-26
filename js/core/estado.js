@@ -1,4 +1,7 @@
 export const estado = {
+  //Escalonador 
+  escalonador:0,
+
   // Filas
   filaPronto: [],
   filaDisco: [],
@@ -23,9 +26,15 @@ export const estado = {
   timelineDisco: [],
 
   // Clock
-  clockSO: null,
+  clock: 0,
 
   // Históricos
   historicoCPU: {},
   historicoDisco: {}
 };
+export const escalonadores = [
+  "RR",
+  "FCFS",
+  "SJF",
+  "SP"
+];

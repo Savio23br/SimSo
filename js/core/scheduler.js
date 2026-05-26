@@ -1,4 +1,12 @@
-import { estado } from "./estado.js";
+import { estado,escalonadores } from "./estado.js";
+import { escalonarRR } from "../algorithms/RoundRobin.js"
+import { escalonarFCFS } from "../algorithms/FCFS.js"
+import { escalonarSJF } from "../algorithms/SJF.js"
+import { escalonarPrioridade } from "../algorithms/SPriority.js"
+import {
+  pegarProximoDaFila,
+  mudarStatus
+} from "../core/scheUtils.js";
 
 function registrarCPU(processo) {
   estado.timelineCPU.push({
@@ -47,24 +55,22 @@ function executarDisco(processo) {
   } else if (processo.etapa === "DISCO2") {
     processo.disco2Restante--;
 
-    if (processo.disco2Restante === 0) {
+    if (processo.disco2Restante === -1) {
       processo.etapa = "FIM";
       processo.status = "TERMINATED";
     }
   }
+  console.log(
+  processo.id,
+  processo.etapa,
+  processo.disco2Restante,
+  escalonadores[estado.escalonador],
+  "Escalonador:",
+  estado.escalonador
+);
 }
 
-function pegarProximoDaFila() {
-  if (estado.filaPronto.length === 0) return null;
-  return estado.filaPronto.shift();
-}
-
-function mudarStatus(processo, novoStatus) {
-  if (!processo) return;
-  processo.status = novoStatus;
-}
-
-export function tickSO() {
+function executarDiscoPipeline() {
   if (!estado.processoDiscoAtual && estado.filaDisco.length > 0) {
     estado.processoDiscoAtual = estado.filaDisco.shift();
   }
@@ -79,19 +85,35 @@ export function tickSO() {
       estado.processoDiscoAtual = null;
     }
   }
+}
 
-  if (!estado.processoAtual) {
-    estado.processoAtual = pegarProximoDaFila();
-    estado.contadorQuantum = 0;
+export function tickSO() {
+  estado.clock++;
+  
+  executarDiscoPipeline();
 
-    if (estado.processoAtual) {
-      mudarStatus(estado.processoAtual, "RUNNING");
-    }
+  switch (estado.escalonador) {
+
+    case 0:
+      escalonarRR(estado);
+      break;
+
+    case 1:
+      escalonarFCFS(estado);
+      break;
+
+    case 2:
+      escalonarSJF(estado);
+      break;
+
+    case 3:
+      escalonarPrioridade(estado);
+      break;
   }
 
+  // executar CPU
   if (estado.processoAtual) {
     executarCPU(estado.processoAtual);
-    estado.contadorQuantum += 1;
 
     if (estado.processoAtual.status === "WAITING") {
       if (!estado.processoDiscoAtual) {
@@ -100,11 +122,6 @@ export function tickSO() {
         estado.filaDisco.push(estado.processoAtual);
       }
 
-      estado.processoAtual = null;
-      estado.contadorQuantum = 0;
-    } else if (estado.contadorQuantum === estado.quantum) {
-      mudarStatus(estado.processoAtual, "READY");
-      estado.filaPronto.push(estado.processoAtual);
       estado.processoAtual = null;
       estado.contadorQuantum = 0;
     } else if (estado.processoAtual.status === "TERMINATED") {
