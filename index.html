@@ -29,6 +29,20 @@
       <section id="interface1">
         <h2>Tabela de Processos</h2>
 
+        <select class="btn" name="Escalonador-barra" id="Escalonador">
+            <option value="0">
+              Rodizio(Round-Robin)
+            </option>
+            <option value="1">
+              FCFS (Primeiro a Chegar, Primeiro a Ser Executado)           
+            </option>
+            <option value="2">
+              Trabalho Mais Curto Primeiro
+            </option>
+            <option value="3">
+              Escalonamento por Prioridade
+            </option>
+          </select>
         <div class="boxtabela">
           <table class="tabela">
             <thead>
@@ -47,22 +61,9 @@
         </div>
 
         <div id="controle">
-          <button class="btn" onclick="adicionar()">Adiconar</button>
+          <button class="btn" onclick="adicionar()">Adiconar</button><p><br></p>
           <button class="btn" onclick="setEscalonador()">Escalonador</button>
-          <select name="Escalonador-barra" id="Escalonador">
-            <option value="0">
-              Rodizio(Round-Robin)
-            </option>
-            <option value="1">
-              FCFS (Primeiro a Chegar, Primeiro a Ser Executado)           
-            </option>
-            <option value="2">
-              Trabalho Mais Curto Primeiro
-            </option>
-            <option value="3">
-              Escalonamento por Prioridade
-            </option>
-          </select>
+          
           <button class="btn" onclick="remover()">Remover</button>
           <button class="btn" onclick="proximo()">Proximo</button>
           <button class="btn" onclick="resetarTimer()">Resetar</button>
