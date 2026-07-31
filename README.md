@@ -12,7 +12,7 @@ O **SimSO (Simulador de Sistema Operacional)** é uma aplicação web desenvolvi
 O objetivo do projeto é demonstrar de forma visual e interativa conceitos como **gerenciamento de processos, filas, estados de execução e algoritmos de escalonamento de CPU**.
 
 🌐 **Acesse o simulador:**  
-[SimSO - Simulador de Sistema Operacional](https://savio23br.github.io/SimSO/)
+[https://savio23br.github.io/SimSO/](https://savio23br.github.io/SimSO/)
 
 ---
 
